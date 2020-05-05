@@ -1,0 +1,23 @@
+# logger configuration
+log:
+  prefix: '[SERVER-MONITOR-ADMIN]'
+  log-file: true
+  stdout: 'DEBUG'
+  file: 'DEBUG'
+
+# mysql connect configuration
+mysql:
+  username: root
+  password: 'root'
+  path: '47.103.113.65:3306'
+  db-name: 'server-monitor'
+  config: 'charset=utf8&parseTime=True&loc=Local'
+  max-idle-conns: 10
+  max-open-conns: 10
+  log-mode: true
+
+
+jwt:
+  expire-time: 86400 #失效时间为一天
+  secret: gJEZpdnZmCLQ67VE # token 秘钥
+  issuer: server-monitor-admin # 签发人
