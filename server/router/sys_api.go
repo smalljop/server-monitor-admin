@@ -22,6 +22,9 @@ func InitProjectRouter(group *gin.RouterGroup) {
 	//其中的变量是单独的作用域
 	{
 		routerGroup.GET("/list", v1.ListProject)
+		routerGroup.POST("/save", v1.SaveProject)
+		routerGroup.POST("/update", v1.UpdateProject)
+		routerGroup.POST("/delete", v1.DeleteProject)
 	}
 
 }

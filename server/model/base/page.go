@@ -12,5 +12,5 @@ type BasePage struct {
 
 //获取offset
 func (b BasePage) GetOffset() uint64 {
-	return b.Page - 1*b.Limit
+	return (b.Page - 1) * b.Limit
 }

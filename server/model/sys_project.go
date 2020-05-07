@@ -11,5 +11,5 @@ type SysProject struct {
 	Secret       string `json:"secret"`       // 秘钥
 	Description  string `json:"description"`  // 描述
 	CreateUserID uint   `json:"createUserId"` //创建人
-	DelFlag      bool   `json:"delFlag"`      // 是否删除
+	DelFlag      int8   `json:"delFlag"`      // 是否删除
 }

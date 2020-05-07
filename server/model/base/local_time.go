@@ -16,6 +16,16 @@ func (t LocalTime) MarshalJSON() ([]byte, error) {
 	seconds := t.Unix()
 	return []byte(strconv.FormatInt(seconds, 10)), nil
 }
+
+func (t *LocalTime) UnmarshalJSON(data []byte) error {
+	// Ignore null, like in the main JSON package.
+	if string(data) == "null" {
+		return nil
+	}
+	return nil
+	// Fractional seconds are handled implicitly by Parse.
+}
+
 func (t LocalTime) Value() (driver.Value, error) {
 	var zeroTime time.Time
 	if t.Time.UnixNano() == zeroTime.UnixNano() {
@@ -23,6 +33,7 @@ func (t LocalTime) Value() (driver.Value, error) {
 	}
 	return t.Time, nil
 }
+
 func (t *LocalTime) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
 	if ok {
