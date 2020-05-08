@@ -33,8 +33,7 @@ func ListProject(c *gin.Context) {
 // @Router /api/project/save [get]
 func SaveProject(c *gin.Context) {
 	var R model.SysProject
-	err := c.ShouldBindJSON(&R)
-	global.LOG.Error(err)
+	c.ShouldBindJSON(&R)
 	userId := c.GetInt64(utils.USER_ID_FILED)
 	//生成uuid作为连接秘钥
 	v4 := uuid.NewV4()
@@ -49,7 +48,7 @@ func SaveProject(c *gin.Context) {
 // @Produce  application/json
 // @Param data body request.QueryProject true "分页数据"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
-// @Router /api/project/update [get]
+// @Router /api/project/update [post]
 func UpdateProject(c *gin.Context) {
 	var R model.SysProject
 	_ = c.ShouldBindJSON(&R)
@@ -58,14 +57,14 @@ func UpdateProject(c *gin.Context) {
 }
 
 // @Tags Project
-// @Summary 修改项目
+// @Summary 删除
 // @Produce  application/json
 // @Param data body request.QueryProject true "分页数据"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
-// @Router /api/project/delete [get]
+// @Router /api/project/delete [post]
 func DeleteProject(c *gin.Context) {
-	var R request.IdStruct
+	var R model.SysProject
 	_ = c.ShouldBindJSON(&R)
-	global.DB.Model(&R).Updates(model.SysProject{DelFlag: 1})
+	global.DB.Model(&R).Updates(model.SysProject{DelFlag: 1}).Where("id = ?", R.Id)
 	response.Ok(c)
 }

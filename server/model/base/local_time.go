@@ -2,43 +2,54 @@ package base
 
 import (
 	"database/sql/driver"
+	"errors"
 	"fmt"
-	"strconv"
+	"strings"
 	"time"
 )
 
-type LocalTime struct {
-	time.Time
+type LocalTime time.Time
+
+func (t *LocalTime) String() string {
+	return fmt.Sprintf("hhh:%s", time.Time(*t).String())
 }
 
+// json序列化方法
 func (t LocalTime) MarshalJSON() ([]byte, error) {
 	//格式化秒
-	seconds := t.Unix()
-	return []byte(strconv.FormatInt(seconds, 10)), nil
+	formatted := fmt.Sprintf("\"%v\"", time.Time(t).Format("2006-01-02 15:04:05"))
+	return []byte(formatted), nil
 }
 
 func (t *LocalTime) UnmarshalJSON(data []byte) error {
-	// Ignore null, like in the main JSON package.
 	if string(data) == "null" {
 		return nil
 	}
-	return nil
-	// Fractional seconds are handled implicitly by Parse.
+	var err error
+	//前端接收的时间字符串
+	str := string(data)
+	//去除接收的str收尾多余的"
+	timeStr := strings.Trim(str, "\"")
+	t1, err := time.Parse("2006-01-02 15:04:05", timeStr)
+	*t = LocalTime(t1)
+	return err
 }
 
+//goorm获取值方法
 func (t LocalTime) Value() (driver.Value, error) {
-	var zeroTime time.Time
-	if t.Time.UnixNano() == zeroTime.UnixNano() {
-		return nil, nil
-	}
-	return t.Time, nil
+	// MyTime 转换成 time.Time 类型
+	tTime := time.Time(t)
+	return tTime.Format("2006-01-02 15:04:05"), nil
 }
 
+// gorm 反射值方法
 func (t *LocalTime) Scan(v interface{}) error {
-	value, ok := v.(time.Time)
-	if ok {
-		*t = LocalTime{Time: value}
-		return nil
+	switch vt := v.(type) {
+	case time.Time:
+		// 字符串转成 time.Time 类型
+		*t = LocalTime(vt)
+	default:
+		return errors.New("类型处理错误")
 	}
-	return fmt.Errorf("can not convert %v to timestamp", v)
+	return nil
 }

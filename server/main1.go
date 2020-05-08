@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/jinzhu/gorm"
-	"server-monitor-admin/utils"
 )
 
 type Product struct {
@@ -12,6 +11,4 @@ type Product struct {
 }
 
 func main() {
-	v := utils.MD5V([]byte("admin"))
-	print(v)
 }
