@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	v1 "server-monitor-admin/api/v1"
+	v1 "server-monitor-admin/api/manage"
 )
 
 /**

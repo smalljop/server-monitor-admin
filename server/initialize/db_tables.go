@@ -9,6 +9,6 @@ import (
 func DbTables() {
 	db := global.DB
 	db.AutoMigrate(&model.SysUser{})
-	db.AutoMigrate(&model.SysProject{})
+	db.AutoMigrate(&model.SysServerGroup{})
 	global.LOG.Debug("register table success")
 }

@@ -28,6 +28,15 @@ func Result(code int, data interface{}, msg string, c *gin.Context) {
 	})
 }
 
+//根据err判断是否成功
+func IsOK(err error, c *gin.Context) {
+	if err != nil {
+		Ok(c)
+	} else {
+		FailMsg(err.Error(), c)
+	}
+}
+
 //成功
 func Ok(c *gin.Context) {
 	Result(SUCCESS, map[string]interface{}{}, "操作成功", c)

@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	v1 "server-monitor-admin/api/v1"
+	v1 "server-monitor-admin/api/manage"
 	"server-monitor-admin/middleware"
 )
 
@@ -18,13 +18,13 @@ func InitUserRouter(group *gin.RouterGroup) {
 
 //初始化项目路由
 func InitProjectRouter(group *gin.RouterGroup) {
-	routerGroup := group.Group("/project").Use(middleware.JwtAuth())
+	routerGroup := group.Group("/server/group").Use(middleware.JwtAuth())
 	//其中的变量是单独的作用域
 	{
-		routerGroup.GET("/list", v1.ListProject)
-		routerGroup.POST("/save", v1.SaveProject)
-		routerGroup.POST("/update", v1.UpdateProject)
-		routerGroup.POST("/delete", v1.DeleteProject)
+		routerGroup.GET("/list", v1.ListServerGroup)
+		routerGroup.POST("/save", v1.SaveServerGroup)
+		routerGroup.POST("/update", v1.UpdateServerGroup)
+		routerGroup.POST("/delete", v1.DeleteServerGroup)
 	}
 
 }

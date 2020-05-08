@@ -7,8 +7,8 @@ import (
 	"server-monitor-admin/utils"
 )
 
-func ListProject(page *request.QueryProject) {
-	var projects []model.SysProject
+func ListServerGroup(page *request.QueryServerGroup) {
+	var projects []model.SysServerGroup
 	db := global.DB.Limit(page.Limit).Offset(page.GetOffset()).Order("create_time desc")
 	if page.UserId != utils.SUPER_ADMIN_USER_ID {
 		db = db.Where("create_user_id=?", page.UserId)

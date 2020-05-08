@@ -4,8 +4,8 @@ import (
 	"server-monitor-admin/model/base"
 )
 
-// 项目
-type SysProject struct {
+// 服务组
+type SysServerGroup struct {
 	base.BaseModel
 	ProjectName  string `json:"projectName"`  //项目名
 	Secret       string `json:"secret"`       // 秘钥
