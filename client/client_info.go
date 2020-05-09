@@ -40,7 +40,7 @@ type Stat struct {
 }
 
 //获取客户端服务器信息
-func GetStat() {
+func GetStat() Stat {
 	stat := Stat{}
 	getHost(&stat)
 	getNet(&stat)
@@ -57,6 +57,7 @@ func GetStat() {
 	//println(hostInfo.Hostname)
 	//host.PlatformInformation()
 	//println(ip)
+	return stat
 }
 
 func getMemory(s *Stat) {
@@ -154,22 +155,4 @@ func getDiskInfo(stat *Stat) {
 	}
 	stat.DiskRead = FormatByteSize(int64(diskRead), 10)
 	stat.DiskWrite = FormatByteSize(int64(diskWrite), 10)
-}
-
-func main() {
-	//counters, _ := net2.IOCounters(false)
-	//net2.Interfaces()
-	//for index, v := range counters {
-	//	fmt.Printf("%v:%v send:%v recv:%v\n", index, v, v.BytesSent, v.BytesRecv)
-	//}
-	//size := FormatByteSize(470923591, 10)
-	//println(size)
-	////println(size)
-
-	//getDiskInfo(nil)
-	//state := diskstate.DiskUsage("/")
-	//fmt.Printf("All=%dM, Free=%dM, Available=%dM, Used=%dM, Usage=%d%%",
-	//	state.All/diskstate.MB, state.Free/diskstate.MB, state.Available/diskstate.MB, state.Used/diskstate.MB, 100*state.Used/state.All)
-	//getDiskInfo(&Stat{})
-	GetStat()
 }
